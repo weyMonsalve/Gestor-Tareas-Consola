@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Se importa lo necesario para trabajar con  listas y mis clases
+using System;
 using System.Collections.Generic;
 using GestorTareasConsola.Clases;
 
@@ -6,154 +7,177 @@ namespace GestorTareasConsola
 {
     class Program
     {
-        //Lista vacia para guardar tareas en memoria que el usuario agregue
-        static List<Tarea> listaTareas = new List<Tarea>();
+        //Aqui van todas la cosas que debo realizar
+        static List<Tarea> misPendientes = new List<Tarea>();     //esta es una variable tipo local
 
         static void Main(string[] args)
         {
-            bool salir = false;  // variable que controla si el programa se sigue ejecutando o no
+            bool quieroSalir = false;  // variable que controla si el programa para sabe si se sigue ejecutando
 
-            //Mientras salir sea falso, el programa seguira mostarndo el menu
-            while (!salir)
+            //Mientras salir sea falso, seguira mostarndo el menu
+            while (!quieroSalir)
             {
-                Console.Clear();  //Limpiamos pantalla
+                Console.Clear();  //Limpia la pantalla
                 Console.WriteLine("=======MENÚ PRINCIPAL=======");
-                Console.WriteLine("1. Agregar tarea");
-                Console.WriteLine("2. Listar tareas");
-                Console.WriteLine("3. Marcar tarea como completada");
+                Console.WriteLine("1. Anotar nueva tarea");
+                Console.WriteLine("2. Ver tareas pendientes");
+                Console.WriteLine("3. Marcar tarea como realizada");
                 Console.WriteLine("4. Eliminar tarea");
                 Console.WriteLine("5. Salir");
+                Console.Write("Elige una opcion del 1 al 5: ");
 
-                
-                //Bloque para validar opción
-                
-                Console.Write("Seleccione una opción: ");
-                string opcion = Console.ReadLine();
+                // Según lo que el usuario elija, se llama a la función correspondiente
+                string loElegido = Console.ReadLine();
 
-                if (string.IsNullOrWhiteSpace(opcion))
+                switch (loElegido)
                 {
-                    Console.WriteLine("⚠️ No ingresaste ninguna opción.");
+                    case "1":
+                        ApuntarPendiente();
+                        break;
+                    case "2":
+                        VerTodo();
+                        break;
+                    case "3":
+                        MarcarComoRealizado();
+                        break;
+                    case "4":
+                        BorrarPendiente();
+                        break;
+                    case "5":
+                        quieroSalir = true; //Se pone asi para que termine el programa
+                        Console.WriteLine("Cerrando el programa");
+                        break;
+                    default:
+                        Console.WriteLine("Opción no valida. Intenta de nuevo");
+                        Console.ReadKey();
+                        break;
+
+
                 }
-                else if (opcion != "1" && opcion != "2" && opcion != "3" && opcion != "4" && opcion != "5")
+            }
+        }
+        // Función para anotar una nueva tarea
+        static void ApuntarPendiente()  //Usamos static void  para que se ejecute sin necesidad de crear un objeto de la clase
+        {
+            Console.Clear();
+            Console.WriteLine("===== NUEVA COSA A REALIZAR =====");
+            Console.Write("¿Que vas a realizar?: ");
+            string cosa = Console.ReadLine();    // Nombramos de la tarea
+
+            Console.Write("¿quieres agregarle una fecha limite? (s/n): ");
+            string agregarFecha = Console.ReadLine().ToLower();
+
+            DateTime? fecha = null;   // Fecha es opcional
+
+            if (agregarFecha == "s")
+            {
+                Console.Write("Escribe la fecha (formato: yyyy-mm-dd): ");
+                string textoFecha = Console.ReadLine();
+
+                try
                 {
-                    Console.WriteLine("⚠️ Opción no válida. Intenta con un número del 1 al 5.");
+                    fecha = DateTime.Parse(textoFecha);
+                }
+                catch
+                {
+                    Console.WriteLine("Se guradara sin fecha limite");
+                }
+            }
+
+            // Creamos un nuevo objeto Tarea con lo que el usuario escriba
+            Tarea nueva = new Tarea(cosa, fecha);
+            misPendientes.Add(nueva);   // Se agrega a la lista
+
+            Console.WriteLine("Se anoto. Pulsa una tecla para continuar.");
+            Console.ReadKey();
+        }
+
+        // Función para mostrar todas las tareas guardadas
+        static void VerTodo()
+        {
+            Console.Clear();
+            Console.WriteLine("==== ESTO ES LO PENDIENTE ====");
+
+            if (misPendientes.Count == 0)
+            {
+                Console.WriteLine("No tienes nada pendiente.");
+            }
+            else
+            {
+                for (int i = 0; i < misPendientes.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {misPendientes[i]}");
+                }
+            }
+
+            Console.WriteLine("Pulsa una tecla para volver a menú.");
+            Console.ReadKey();
+        }
+
+        // Función que permite marcar una tarea completada
+        static void MarcarComoRealizado()
+        {
+            Console.Clear();
+            Console.WriteLine("==== MARCAR COMO REALIZADO ====");
+            VerTodo();    //  Se muestra la lista para que el usuario vea qué número elegira
+
+            Console.Write("escribe el número de la tarea ya realizada:");
+            string entrada = Console.ReadLine();
+
+            try
+            {
+                int indice = int.Parse(entrada) - 1;
+
+                if (indice >= 0 && indice < misPendientes.Count)
+                {
+                    misPendientes[indice].Realizada = true;
+                    Console.WriteLine("Tarea marcada como completada.");
                 }
                 else
                 {
-                    // Según lo que elija el usuario, se ejecuta una acción diferente
-                    switch (opcion)
-                    {
-                        case "1":
-                            AgregarTarea();         //Función para agreagar una tarea
-                            break;
-                        case "2":
-                            ListarTareas();         //Función para ver las tareas
-                            break;
-                        case "3":
-                            MarcarComoCompletada();  //Función para marcar la tarea como completada
-                            break;
-                        case "4":
-                            EliminarTarea();         //Función para eliminar una tarea
-                            break;
-                        case "5":
-                            salir = true;  // para salir del programa se cambia true
-                            break;
-                    }
+                    Console.WriteLine("Numero no existente en tú lista.");
                 }
-
-                Console.WriteLine("Presione una tecla para continuar...");  //se espera que usuario presione una tecla para volver al menu
-                Console.ReadKey();
             }
+            catch
+            {
+                Console.WriteLine("No es un número valido");
+            }
+
+            Console.WriteLine("Presiona una tecla para continuar.");
+            Console.ReadKey();
         }
 
-        //Metodo para agregar una nueva tarea
-        static void AgregarTarea()
+        //Función que permite eliminar una tarea
+        static void BorrarPendiente()
         {
-            Console.Write("Ingrese la descripción de la tarea: ");
-            string descripcion = Console.ReadLine();   //aqui leemos la descripción
+            Console.Clear();
+            Console.WriteLine("=== ELIMINAR ALGO ===");
+            VerTodo();
 
-            Console.Write("¿Desea establecer una fecha limite? (s/n): ");
-            string respuesta = Console.ReadLine().ToLower();  // Convertimos a minuscula por mejor opcion
+            Console.WriteLine("¿Cual deseas eliminar?. Escribe el numero: ");
+            string entrada = Console.ReadLine();
 
-            DateTime? fechaLimite = null;        //Por defecto, no tiene fecha
-
-            if (respuesta == "s")
+            try
             {
-                Console.WriteLine("Ingrese la fecha limite: ");
-                string fechaTexto = Console.ReadLine();
+                int indice = int.Parse(entrada) - 1;
 
-                //Se intenta convertir el texto a una fecha valida
-                if (DateTime.TryParse(fechaTexto, out DateTime fecha))
+                if (indice >= 0 && indice < misPendientes.Count)
                 {
-                    fechaLimite = fecha;
+                    misPendientes.RemoveAt(indice);
+                    Console.WriteLine("Eliminado de la lista.");
                 }
                 else
                 {
-                    Console.WriteLine("Fecha no valida. se agregara sin fecha limite.");
+                    Console.WriteLine("Ese número no existe.");
                 }
             }
-
-            //Creamos una nueva tarea con los datos ingresados por el usuario
-            Tarea nueva = new Tarea(descripcion, fechaLimite);
-            listaTareas.Add(nueva);       //Aqui se agrega a la lista
-
-            Console.WriteLine("Tarea agregada con exito.");
-        }
-
-        //Metodo para ver todas las tareas guardadas
-        static void ListarTareas()
-        {
-            if (listaTareas.Count == 0)
+            catch
             {
-                Console.WriteLine("No hay tareas registardas.");
+                Console.WriteLine("No es un número valido.");
             }
-            else
-            {
-                Console.WriteLine("==== TAREAS ====");
-                for (int i = 0; i < listaTareas.Count; i++)
-                {
-                    //Se muestra cada tarea con sunúmero correspondiente
-                    Console.WriteLine($"{i + 1}. {listaTareas[i]}");
-                }
-            }
-        }
 
-        //Metodo para marcar tarea como completada
-        static void MarcarComoCompletada()
-        {
-            ListarTareas();     //Se muestran las tareas para que el usuarui elija
-
-            Console.Write("Ingrese el numero de la taraea a completar: ");
-            string entrada = Console.ReadLine();
-
-            if (int.TryParse(entrada, out int numero) && numero >= 1 && numero <= listaTareas.Count)
-            {
-                listaTareas[numero - 1].Completada = true;  //Se marca la tarea completada
-                Console.WriteLine("Tarea marcada como completada");
-            }
-            else
-            {
-                Console.WriteLine("Número invalido.");
-            }
-        }
-
-        //Metodo para eliminar una tarea
-        static void EliminarTarea()
-        {
-            ListarTareas();       //Se listan las tareas para elegir cuál borrar
-
-            Console.Write("Ingrese el número de la tarea a eliminar: ");
-            string entrada = Console.ReadLine();
-
-            if (int.TryParse(entrada, out int numero) && numero >= 1 && numero <= listaTareas.Count)
-            {
-                listaTareas.RemoveAt(numero - 1); // Quitamos la tarea de la lista
-                Console.WriteLine("Tarea eliminada.");
-            }
-            else
-            {
-                Console.WriteLine("Número inválido.");
-            }
+            Console.WriteLine("Presiona una tecla para continuar.");
+            Console.ReadKey();
         }
     }
 }

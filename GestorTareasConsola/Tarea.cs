@@ -9,7 +9,7 @@ namespace GestorTareasConsola.Clases
         public bool Realizada { get; set; }
 
         // Constructor que nos ayuda a crear una nueva tarea
-        public Tarea(string descripcion, DateTime? fechaLimite = null)
+        public Tarea(string realizar, DateTime? paraQueDia = null)
         {
             Realizar = realizar;
             ParaQueDia = paraQueDia;

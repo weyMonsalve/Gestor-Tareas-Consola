@@ -1,87 +1,69 @@
-# Aplicación de Consola: Gestor de Tareas (To-Do List)
+# Aplicación de Consola - Gestor de Tareas (To-Do List)
 
-Este proyecto es una aplicación de consola desarrollada en **C#** utilizando **.NET Framework 4.8**,  
-como parte de una **prueba técnica para desarrollador practicante**.  
-La aplicación permite gestionar una pequeña lista de tareas de forma sencilla a través de un menú interactivo en consola.
 
----
+Este proyecto es una aplicación de consola hecha en C# con .NET Framework 4.8. Fue realizada como parte de una prueba técnica para aprendiz o practicante. El objetivo principal es llevar un registro simple de tareas pendientes desde la terminal.
 
-## Descripción del proyecto
+## ¿Qué hace esta app?
 
-Esta aplicación de consola permite:
+Permite lo siguiente:
 
-- Agregar tareas (con descripción y fecha límite opcional)
-- Listar todas las tareas registradas
-- Marcar tareas como completadas
-- Eliminar tareas
+- Agregar nuevas tareas (con o sin fecha)
+- Ver la lista completa de tareas
+- Marcar tareas como realizadas
+- Eliminar tareas que ya no se necesitan
+- Salir del programa de forma controlada
 
----
+Todo se maneja a través de un menú que aparece en la consola y que es fácil de usar.
 
-## Requerimientos funcionales implementados
+## ¿Qué funcionalidades incluye?
 
-1. **Agregar tareas:**
-   - Permite ingresar una descripción de la tarea
-   - También permite ingresar una fecha límite (opcional)
+### Agregar tarea
+- Puedes escribir qué tarea necesitas hacer.
+- Si quieres, puedes ponerle una fecha límite (opcional).
 
-2. **Listar tareas:**
-   - Muestra todas las tareas, indicando si están completadas o no
+### Ver tareas
+- Muestra todas las tareas que has anotado.
+- Se indica si ya están hechas o si aún están pendientes.
 
-3. **Marcar tareas como completadas:**
-   - El usuario puede seleccionar una tarea y marcarla como realizada
+### Marcar como hecha
+- Puedes seleccionar una tarea de la lista y marcarla como completada.
 
-4. **Eliminar tareas:**
-   - El usuario puede eliminar cualquier tarea de la lista
+### Eliminar tarea
+- También puedes borrar cualquier tarea que ya no necesites.
 
----
+## Aspectos técnicos
 
-## Requerimientos técnicos cumplidos
+- Se creó una clase `Tarea` que tiene lo básico: descripción, fecha límite (opcional) y si ya está hecha o no.
+- Se utiliza una lista (`List<Tarea>`) para guardar las tareas.
+- El programa usa `Console.ReadLine()` y `Console.WriteLine()` para interactuar con el usuario.
+- Se añadieron validaciones para que el programa no se cierre si el usuario se equivoca al ingresar un número o una fecha (uso de `try-catch`).
 
-1. **Uso de clases y objetos:**
-   - Se creó una clase `Tarea` con propiedades (`Descripcion`, `FechaLimite`, `Completada`) y un método `ToString`
-   - Se aplicó encapsulamiento usando modificadores de acceso como `public` y `private`
-
-2. **Manejo de colecciones:**
-   - Se utilizó una lista genérica `List<Tarea>` para almacenar las tareas
-
-3. **Interacción con el usuario:**
-   - Se implementó un menú interactivo en consola para que el usuario pueda elegir si desea agregar, listar, completar o eliminar tareas
-
-4. **Manejo de errores:**
-   - Se utilizaron bloques `try-catch` para manejar excepciones y evitar errores por entradas inválidas (por ejemplo, si se escriben letras en lugar de números)
-
----
-
-## Instrucciones para compilar y ejecutar
+## ¿Cómo ejecutar este proyecto?
 
 ### Requisitos
 
-- Tener instalado **Visual Studio** con soporte para **.NET Framework 4.8**
+- Tener Visual Studio instalado (con soporte para .NET Framework 4.8)
 
-### Pasos para ejecutar el proyecto
+### Pasos para correrlo
 
-1. Abre Visual Studio
-2. Haz clic en **"Abrir un proyecto o solución"**
-3. Selecciona el archivo `GestorTareasConsola.sln`
-4. Una vez cargado el proyecto, presiona `Ctrl + F5` para ejecutar sin depurar  
-   (también puedes usar el botón **"Iniciar"**)
+1. Abre Visual Studio.
+2. Elige la opción **"Abrir un proyecto o solución"**.
+3. Busca el archivo `GestorTareasConsola.sln` y ábrelo.
+4. Una vez cargado, presiona `Ctrl + F5` para ejecutarlo (sin depurar).
+   - También puedes hacer clic en el botón de **Iniciar**.
 
----
+## Notas sobre el código
 
-## Documentación del código
+- El proyecto está separado por clases. La lógica principal está en `Program.cs` y la definición de cada tarea está en `Tarea.cs`.
+- Los comentarios están escritos en un lenguaje claro para que se entienda qué hace cada parte.
+- Se usaron nombres sencillos y en español tanto para métodos como para variables.
 
-- El código está comentado de manera clara para facilitar su comprensión.
-- Se explican las partes importantes: cómo se agregan tareas, cómo se recorre la lista, cómo se muestran mensajes, y cómo se validan las entradas del usuario.
+## Entrega
 
----
-
-## Entregable
-
-- Este repositorio contiene todo el código fuente de la aplicación.
-- Incluye este archivo `README.md` con las instrucciones para compilar y ejecutar.
-- El proyecto ha sido subido a GitHub en un repositorio público como se solicitó.
+- El proyecto completo está subido en este repositorio.
+- Incluye este archivo `README.md` con las instrucciones necesarias para compilar y ejecutar.
 
 ---
 
-## Autor
-
+**Autor del proyecto:**  
 Javier Wbeimar Monsalve Rojas
