@@ -23,32 +23,42 @@ namespace GestorTareasConsola
                 Console.WriteLine("3. Marcar tarea como completada");
                 Console.WriteLine("4. Eliminar tarea");
                 Console.WriteLine("5. Salir");
-                Console.WriteLine("Seleccione una opción: ");
 
-                //Leemos lo que el usuario escriba como opción
+                
+                //Bloque para validar opción
+                
+                Console.Write("Seleccione una opción: ");
                 string opcion = Console.ReadLine();
 
-                // Según lo que elija el usuario, se ejecuta una acción diferente
-                switch (opcion)
+                if (string.IsNullOrWhiteSpace(opcion))
                 {
-                    case "1":
-                        AgregarTarea();         //Función para agreagar una tarea
-                        break;
-                    case "2":
-                        ListarTareas();         //Función para ver las tareas
-                        break;
-                    case "3":
-                        MarcarComoCompletada();  //Función para marcar la tarea como completada
-                        break;
-                    case "4":
-                        EliminarTarea();         //Función para eliminar una tarea
-                        break;
-                    case "5":
-                        salir = true;  // para salir del programa se cambia true
-                        break;
-                    default:
-                        Console.WriteLine("Opción no valida.");  //Cuando se escrib algo que no esta en el menú
-                        break;
+                    Console.WriteLine("⚠️ No ingresaste ninguna opción.");
+                }
+                else if (opcion != "1" && opcion != "2" && opcion != "3" && opcion != "4" && opcion != "5")
+                {
+                    Console.WriteLine("⚠️ Opción no válida. Intenta con un número del 1 al 5.");
+                }
+                else
+                {
+                    // Según lo que elija el usuario, se ejecuta una acción diferente
+                    switch (opcion)
+                    {
+                        case "1":
+                            AgregarTarea();         //Función para agreagar una tarea
+                            break;
+                        case "2":
+                            ListarTareas();         //Función para ver las tareas
+                            break;
+                        case "3":
+                            MarcarComoCompletada();  //Función para marcar la tarea como completada
+                            break;
+                        case "4":
+                            EliminarTarea();         //Función para eliminar una tarea
+                            break;
+                        case "5":
+                            salir = true;  // para salir del programa se cambia true
+                            break;
+                    }
                 }
 
                 Console.WriteLine("Presione una tecla para continuar...");  //se espera que usuario presione una tecla para volver al menu
